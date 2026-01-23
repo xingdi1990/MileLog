@@ -48,6 +48,11 @@ struct AutoTrackingView: View {
 
                     // How it works card
                     HowItWorksCard()
+
+                    // Debug card (only in DEBUG builds)
+                    #if DEBUG
+                    DebugCard(detectionManager: detectionManager)
+                    #endif
                 }
                 .padding()
             }
@@ -312,6 +317,111 @@ struct StepRow: View {
         }
     }
 }
+
+#if DEBUG
+struct DebugCard: View {
+    @ObservedObject var detectionManager: TripDetectionManager
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Image(systemName: "ant.fill")
+                    .foregroundStyle(.purple)
+                Text("Debug Mode")
+                    .font(.headline)
+                Spacer()
+                Toggle("", isOn: $detectionManager.isDebugMode)
+                    .labelsHidden()
+                    .tint(.purple)
+            }
+
+            if detectionManager.isDebugMode {
+                Text("Simulate trips without actually driving. Uses fake location data.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+
+                Divider()
+
+                switch detectionManager.state {
+                case .idle, .detecting:
+                    Button {
+                        detectionManager.debugStartSimulatedTrip()
+                    } label: {
+                        HStack {
+                            Image(systemName: "car.fill")
+                            Text("Start Simulated Trip")
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.green)
+
+                case .tracking:
+                    VStack(spacing: 12) {
+                        HStack {
+                            Text("Simulating drive...")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            Spacer()
+                            Text(String(format: "%.2f mi", detectionManager.currentDistance))
+                                .font(.headline)
+                                .foregroundStyle(.green)
+                        }
+
+                        HStack(spacing: 12) {
+                            Button {
+                                detectionManager.debugAddMiles(1.0)
+                            } label: {
+                                Text("+1 mi")
+                                    .frame(maxWidth: .infinity)
+                            }
+                            .buttonStyle(.bordered)
+
+                            Button {
+                                detectionManager.debugAddMiles(5.0)
+                            } label: {
+                                Text("+5 mi")
+                                    .frame(maxWidth: .infinity)
+                            }
+                            .buttonStyle(.bordered)
+
+                            Button {
+                                detectionManager.debugAddMiles(10.0)
+                            } label: {
+                                Text("+10 mi")
+                                    .frame(maxWidth: .infinity)
+                            }
+                            .buttonStyle(.bordered)
+                        }
+
+                        Button {
+                            detectionManager.debugStopSimulatedTrip()
+                        } label: {
+                            HStack {
+                                Image(systemName: "stop.fill")
+                                Text("Stop & Save Trip")
+                            }
+                            .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(.red)
+                    }
+
+                case .saving:
+                    HStack {
+                        ProgressView()
+                        Text("Saving trip...")
+                            .font(.caption)
+                    }
+                }
+            }
+        }
+        .padding()
+        .background(Color.purple.opacity(0.1))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+}
+#endif
 
 #Preview {
     NavigationStack {
