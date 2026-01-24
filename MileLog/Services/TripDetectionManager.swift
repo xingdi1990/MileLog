@@ -38,13 +38,6 @@ class TripDetectionManager: NSObject, ObservableObject {
     @Published var locationAuthStatus: CLAuthorizationStatus = .notDetermined
     @Published var motionAuthStatus: CMAuthorizationStatus = .notDetermined
 
-    // Debug mode
-    #if DEBUG
-    @Published var isDebugMode: Bool = false
-    private var debugSimulationTimer: Timer?
-    private var debugLastLocation: CLLocation?
-    #endif
-
     private var activityManager: CMMotionActivityManager?
     private var locationManager: CLLocationManager?
     private var modelContext: ModelContext?
@@ -184,12 +177,22 @@ class TripDetectionManager: NSObject, ObservableObject {
         tripLocations = []
         currentDistance = 0
 
-        // Only enable background updates if we have Always authorization
-        // Setting this without Always permission causes a crash
-        if locationAuthStatus == .authorizedAlways {
-            locationManager?.allowsBackgroundLocationUpdates = true
+        guard let manager = locationManager else { return }
+
+        // Check for Always authorization before enabling background updates
+        // Note: allowsBackgroundLocationUpdates requires:
+        // 1. CLAuthorizationStatus.authorizedAlways
+        // 2. UIBackgroundModes array containing "location" in Info.plist
+        let currentAuthStatus = manager.authorizationStatus
+        if currentAuthStatus == .authorizedAlways {
+            // Check if UIBackgroundModes contains "location"
+            if let backgroundModes = Bundle.main.object(forInfoDictionaryKey: "UIBackgroundModes") as? [String],
+               backgroundModes.contains("location") {
+                manager.allowsBackgroundLocationUpdates = true
+            }
         }
-        locationManager?.startUpdatingLocation()
+
+        manager.startUpdatingLocation()
     }
 
     private func saveCurrentTrip() {
@@ -209,7 +212,7 @@ class TripDetectionManager: NSObject, ObservableObject {
             startOdometer: 0,
             endOdometer: 0,
             distance: currentDistance,
-            category: .business,
+            category: .unclassified,
             purpose: "Auto-detected trip",
             notes: "Automatically recorded"
         )
@@ -234,89 +237,6 @@ class TripDetectionManager: NSObject, ObservableObject {
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.success)
     }
-
-    // MARK: - Debug Mode
-
-    #if DEBUG
-    func debugStartSimulatedTrip() {
-        guard isDebugMode else { return }
-
-        // Reset any existing state
-        debugStopSimulation()
-
-        state = .detecting
-        errorMessage = nil
-
-        // Quickly move to tracking after 1 second
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            guard let self = self, self.isDebugMode else { return }
-            self.state = .tracking
-            self.tripStartTime = Date()
-            self.tripLocations = []
-            self.currentDistance = 0
-
-            // Start simulating location updates
-            self.debugStartLocationSimulation()
-        }
-    }
-
-    private func debugStartLocationSimulation() {
-        // Simulate starting location (San Francisco)
-        debugLastLocation = CLLocation(latitude: 37.7749, longitude: -122.4194)
-
-        // Update location every 2 seconds, simulating ~30 mph driving
-        debugSimulationTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { [weak self] _ in
-            Task { @MainActor in
-                self?.debugSimulateLocationUpdate()
-            }
-        }
-    }
-
-    private func debugSimulateLocationUpdate() {
-        guard state == .tracking, let lastLocation = debugLastLocation else { return }
-
-        // Move roughly 0.015 miles (~80 feet) per update, simulating ~30 mph
-        // Add some randomness to make it realistic
-        let latChange = Double.random(in: 0.0001...0.0003)
-        let lonChange = Double.random(in: 0.0001...0.0003)
-
-        let newLocation = CLLocation(
-            latitude: lastLocation.coordinate.latitude + latChange,
-            longitude: lastLocation.coordinate.longitude + lonChange
-        )
-
-        let distance = newLocation.distance(from: lastLocation)
-        currentDistance += distance / 1609.34 // Convert meters to miles
-
-        tripLocations.append(newLocation)
-        debugLastLocation = newLocation
-    }
-
-    func debugStopSimulatedTrip() {
-        guard isDebugMode else { return }
-
-        debugStopSimulation()
-
-        if currentDistance > 0.1 {
-            saveCurrentTrip()
-        } else {
-            state = .idle
-            currentDistance = 0
-            tripLocations = []
-        }
-    }
-
-    private func debugStopSimulation() {
-        debugSimulationTimer?.invalidate()
-        debugSimulationTimer = nil
-        debugLastLocation = nil
-    }
-
-    func debugAddMiles(_ miles: Double) {
-        guard isDebugMode, state == .tracking else { return }
-        currentDistance += miles
-    }
-    #endif
 }
 
 // MARK: - CLLocationManagerDelegate

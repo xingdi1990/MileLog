@@ -29,9 +29,22 @@
 		0194C0C02F23F37500A61BB5 /* MileLogUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MileLogUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		0194C0AB2F23F37300A61BB6 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 0194C0A82F23F37300A61BB5 /* MileLog */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0194C0AB2F23F37300A61BB5 /* MileLog */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0194C0AB2F23F37300A61BB6 /* PBXFileSystemSynchronizedBuildFileExceptionSet */,
+			);
 			path = MileLog;
 			sourceTree = "<group>";
 		};
@@ -395,8 +408,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WZQD2T3WBG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MileLog/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "MileLog needs location access to automatically track your trips and calculate mileage when driving.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "MileLog needs location access to track your trips and calculate mileage.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "MileLog uses motion data to detect when you start and stop driving for automatic trip tracking.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -426,8 +444,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WZQD2T3WBG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MileLog/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "MileLog needs location access to automatically track your trips and calculate mileage when driving.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "MileLog needs location access to track your trips and calculate mileage.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "MileLog uses motion data to detect when you start and stop driving for automatic trip tracking.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
