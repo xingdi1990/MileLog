@@ -1,0 +1,21 @@
+# Jekyll configuration for GitHub Pages
+title: MileLog
+description: Simple mileage tracking for tax deductions
+theme: minima
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+# Exclude files from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+
+# Default layout
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
