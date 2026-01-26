@@ -91,7 +91,7 @@ Uninstalling the app removes all data permanently. There is no account or cloud 
 
 Still need help? We're here for you.
 
-**Email:** [support email]
+**Email:** guavatechllc@gmail.com
 
 Please include:
 - Your device model and iOS version
