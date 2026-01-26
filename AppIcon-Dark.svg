@@ -1,0 +1,88 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Darker gradient for dark mode -->
+    <linearGradient id="darkBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E3A5F;stop-opacity:1" />
+      <stop offset="45%" style="stop-color:#4C1D6B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6B2150;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Subtle glass highlight for dark -->
+    <radialGradient id="darkGlassHighlight" cx="30%" cy="20%" r="60%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.15" />
+      <stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:0" />
+    </radialGradient>
+
+    <!-- Green accent -->
+    <linearGradient id="darkTaxGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#34D399;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#10B981;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Road dark -->
+    <linearGradient id="darkRoad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1F2937;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#111827;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background with iOS rounded corners -->
+  <rect x="0" y="0" width="1024" height="1024" rx="224" ry="224" fill="url(#darkBg)"/>
+
+  <!-- Glass highlight overlay -->
+  <rect x="0" y="0" width="1024" height="1024" rx="224" ry="224" fill="url(#darkGlassHighlight)"/>
+
+  <!-- Floating orbs for liquid glass effect -->
+  <circle cx="180" cy="180" r="100" fill="#FFFFFF" fill-opacity="0.04"/>
+  <circle cx="880" cy="800" r="130" fill="#FFFFFF" fill-opacity="0.03"/>
+
+  <!-- Road/highway - curved path -->
+  <path d="M 180 1024
+           Q 300 700 400 550
+           Q 500 400 580 320
+           Q 700 200 900 120"
+        stroke="url(#darkRoad)"
+        stroke-width="140"
+        stroke-linecap="round"
+        fill="none"/>
+
+  <!-- Road center dashes -->
+  <path d="M 220 950
+           Q 330 680 420 540
+           Q 510 400 590 320
+           Q 690 210 860 140"
+        stroke="#FFFFFF"
+        stroke-width="12"
+        stroke-linecap="round"
+        stroke-dasharray="40 60"
+        fill="none"
+        opacity="0.7"/>
+
+  <!-- Simplified car icon -->
+  <g transform="translate(400, 480) rotate(-30)">
+    <!-- Car body -->
+    <rect x="0" y="30" width="180" height="70" rx="20" fill="#E5E7EB"/>
+    <!-- Car roof/cabin -->
+    <path d="M 30 30 Q 40 0 70 0 L 130 0 Q 150 0 160 30 Z" fill="#E5E7EB"/>
+    <!-- Windows -->
+    <path d="M 45 25 Q 52 8 75 8 L 125 8 Q 140 8 147 25 Z" fill="#1E3A5F" opacity="0.8"/>
+    <!-- Front wheel -->
+    <circle cx="45" cy="100" r="28" fill="#1F2937"/>
+    <circle cx="45" cy="100" r="14" fill="#374151"/>
+    <!-- Back wheel -->
+    <circle cx="135" cy="100" r="28" fill="#1F2937"/>
+    <circle cx="135" cy="100" r="14" fill="#374151"/>
+  </g>
+
+  <!-- Dollar/Tax badge -->
+  <circle cx="800" cy="720" r="130" fill="url(#darkTaxGreen)"/>
+  <circle cx="800" cy="720" r="130" fill="#FFFFFF" fill-opacity="0.1"/>
+
+  <!-- Dollar sign -->
+  <text x="800" y="765"
+        font-family="SF Pro Rounded, -apple-system, Helvetica Neue, Arial, sans-serif"
+        font-size="160"
+        font-weight="700"
+        fill="#FFFFFF"
+        text-anchor="middle">$</text>
+</svg>

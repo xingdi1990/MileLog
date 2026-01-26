@@ -1,0 +1,58 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Solid dark background for tinted mode -->
+    <linearGradient id="tintedBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1C1C1E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background with iOS rounded corners - dark for tinted -->
+  <rect x="0" y="0" width="1024" height="1024" rx="224" ry="224" fill="url(#tintedBg)"/>
+
+  <!-- Road/highway - curved path (white/light for tinting) -->
+  <path d="M 180 1024
+           Q 300 700 400 550
+           Q 500 400 580 320
+           Q 700 200 900 120"
+        stroke="#FFFFFF"
+        stroke-width="140"
+        stroke-linecap="round"
+        fill="none"
+        opacity="0.9"/>
+
+  <!-- Road center dashes (dark to show through) -->
+  <path d="M 220 950
+           Q 330 680 420 540
+           Q 510 400 590 320
+           Q 690 210 860 140"
+        stroke="#1C1C1E"
+        stroke-width="14"
+        stroke-linecap="round"
+        stroke-dasharray="40 60"
+        fill="none"/>
+
+  <!-- Simplified car icon - white silhouette -->
+  <g transform="translate(400, 480) rotate(-30)">
+    <!-- Car body -->
+    <rect x="0" y="30" width="180" height="70" rx="20" fill="#FFFFFF"/>
+    <!-- Car roof/cabin -->
+    <path d="M 30 30 Q 40 0 70 0 L 130 0 Q 150 0 160 30 Z" fill="#FFFFFF"/>
+    <!-- Windows (cutout effect) -->
+    <path d="M 45 25 Q 52 8 75 8 L 125 8 Q 140 8 147 25 Z" fill="#1C1C1E"/>
+    <!-- Wheels (dark) -->
+    <circle cx="45" cy="100" r="28" fill="#1C1C1E"/>
+    <circle cx="135" cy="100" r="28" fill="#1C1C1E"/>
+  </g>
+
+  <!-- Dollar/Tax badge - white circle -->
+  <circle cx="800" cy="720" r="130" fill="#FFFFFF"/>
+
+  <!-- Dollar sign - dark -->
+  <text x="800" y="765"
+        font-family="SF Pro Rounded, -apple-system, Helvetica Neue, Arial, sans-serif"
+        font-size="160"
+        font-weight="700"
+        fill="#1C1C1E"
+        text-anchor="middle">$</text>
+</svg>
