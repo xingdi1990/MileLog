@@ -1,0 +1,60 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Main gradient matching the liquid glass theme -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#5B8DEE;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#EC4899;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- White with transparency for glass effect -->
+    <linearGradient id="glassShine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.25" />
+      <stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:0" />
+    </linearGradient>
+
+    <!-- Green for the checkmark/money indicator -->
+    <linearGradient id="moneyGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#34D399;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#10B981;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect x="0" y="0" width="1024" height="1024" rx="224" ry="224" fill="url(#bgGrad)"/>
+
+  <!-- Subtle glass shine at top -->
+  <ellipse cx="512" cy="200" rx="400" ry="250" fill="url(#glassShine)"/>
+
+  <!-- Stylized "M" that looks like a road/path -->
+  <g transform="translate(512, 512)">
+    <!-- Main M shape formed by two peaks representing road/miles -->
+    <path d="M -280 200
+             L -280 -120
+             L -160 -120
+             L 0 120
+             L 160 -120
+             L 280 -120
+             L 280 200
+             L 160 200
+             L 160 20
+             L 0 260
+             L -160 20
+             L -160 200
+             Z"
+          fill="#FFFFFF"
+          fill-opacity="0.95"/>
+  </g>
+
+  <!-- Green circle badge in corner - representing savings/deduction -->
+  <circle cx="780" cy="244" r="120" fill="url(#moneyGreen)"/>
+  <circle cx="780" cy="244" r="120" fill="#FFFFFF" fill-opacity="0.15"/>
+
+  <!-- Checkmark inside the badge -->
+  <path d="M 720 244 L 760 284 L 850 194"
+        stroke="#FFFFFF"
+        stroke-width="32"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        fill="none"/>
+</svg>
