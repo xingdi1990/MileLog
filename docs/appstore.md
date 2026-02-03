@@ -192,15 +192,15 @@ To test manual entry:
 ## Copyright
 
 ```
-© 2026 [Your Name or Company]
+© 2026 Guava Tech LLC
 ```
 
 ---
 
 ## Support & Privacy URLs
 
-- **Support URL:** https://[username].github.io/MileLog/support
-- **Privacy Policy URL:** https://[username].github.io/MileLog/privacy
+- **Support URL:** https://xingdi1990.github.io/MileLog/support
+- **Privacy Policy URL:** https://xingdi1990.github.io/MileLog/privacy
 
 ---
 
