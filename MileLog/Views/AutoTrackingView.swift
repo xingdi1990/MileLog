@@ -77,13 +77,21 @@ struct PermissionWarningView: View {
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
 
-            Button("Update in Settings") {
-                if let url = URL(string: UIApplication.openSettingsURLString) {
-                    UIApplication.shared.open(url)
+            if detectionManager.locationAuthStatus == .notDetermined {
+                Button("Grant Location Access") {
+                    detectionManager.requestPermissions()
                 }
+                .buttonStyle(.borderedProminent)
+                .tint(.orange)
+            } else {
+                Button("Update in Settings") {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url)
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.orange)
             }
-            .buttonStyle(.borderedProminent)
-            .tint(.orange)
         }
         .padding()
         .background(Color.orange.opacity(0.1))

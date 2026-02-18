@@ -109,8 +109,16 @@ class TripDetectionManager: NSObject, ObservableObject {
         activityManager?.startActivityUpdates(to: .main) { [weak self] activity in
             guard let self = self, let activity = activity else { return }
             Task { @MainActor in
+                if self.motionAuthStatus != .authorized {
+                    self.updateAuthStatus()
+                }
                 self.handleActivityUpdate(activity)
             }
+        }
+
+        // Delayed check for motion auth (covers denied case where no callback fires)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            self?.updateAuthStatus()
         }
     }
 
