@@ -6,11 +6,59 @@
 //
 
 import SwiftUI
+import UIKit
+
+// UIKit-backed text field with a Done button above the decimal pad
+private struct DecimalTextField: UIViewRepresentable {
+    @Binding var text: String
+    var placeholder: String
+
+    func makeUIView(context: Context) -> UITextField {
+        let textField = UITextField()
+        textField.placeholder = placeholder
+        textField.keyboardType = .decimalPad
+        textField.borderStyle = .roundedRect
+        textField.font = .preferredFont(forTextStyle: .body)
+        textField.delegate = context.coordinator
+
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let done = UIBarButtonItem(title: "Done", style: .done, target: context.coordinator, action: #selector(Coordinator.doneTapped))
+        toolbar.items = [spacer, done]
+        textField.inputAccessoryView = toolbar
+
+        return textField
+    }
+
+    func updateUIView(_ uiView: UITextField, context: Context) {
+        if uiView.text != text {
+            uiView.text = text
+        }
+    }
+
+    func makeCoordinator() -> Coordinator { Coordinator(self) }
+
+    class Coordinator: NSObject, UITextFieldDelegate {
+        var parent: DecimalTextField
+        init(_ parent: DecimalTextField) { self.parent = parent }
+
+        @objc func doneTapped() {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
+
+        func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+            let current = textField.text ?? ""
+            guard let stringRange = Range(range, in: current) else { return false }
+            parent.text = current.replacingCharacters(in: stringRange, with: string)
+            return false
+        }
+    }
+}
 
 struct SettingsView: View {
     @AppStorage(SettingsKeys.mileageRate) private var mileageRate: Double = SettingsKeys.defaultRate
     @State private var rateText: String = ""
-    @FocusState private var isEditing: Bool
 
     var body: some View {
         ZStack {
@@ -32,11 +80,8 @@ struct SettingsView: View {
                                 .font(.title2)
                                 .fontWeight(.semibold)
 
-                            TextField("0.67", text: $rateText)
-                                .keyboardType(.decimalPad)
-                                .textFieldStyle(.roundedBorder)
-                                .frame(width: 100)
-                                .focused($isEditing)
+                            DecimalTextField(text: $rateText, placeholder: "0.67")
+                                .frame(width: 100, height: 34)
                                 .onChange(of: rateText) { _, newValue in
                                     if let value = Double(newValue), value >= 0 {
                                         mileageRate = value
@@ -84,18 +129,11 @@ struct SettingsView: View {
                 }
                 .padding()
             }
+            .scrollDismissesKeyboard(.interactively)
         }
         .navigationTitle("Settings")
         .onAppear {
             rateText = String(format: "%.3f", mileageRate)
-        }
-        .toolbar {
-            ToolbarItemGroup(placement: .keyboard) {
-                Spacer()
-                Button("Done") {
-                    isEditing = false
-                }
-            }
         }
     }
 }
