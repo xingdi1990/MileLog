@@ -21,8 +21,7 @@ private struct DecimalTextField: UIViewRepresentable {
         textField.font = .preferredFont(forTextStyle: .body)
         textField.delegate = context.coordinator
 
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let done = UIBarButtonItem(title: "Done", style: .done, target: context.coordinator, action: #selector(Coordinator.doneTapped))
         toolbar.items = [spacer, done]
