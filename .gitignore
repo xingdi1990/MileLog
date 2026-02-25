@@ -1,1 +1,6 @@
 build/
+*.mp4
+*.MP4
+screenshots/
+thumbnails/
+trimmed/
